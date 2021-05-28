@@ -39,3 +39,21 @@ type ConfigRequest struct {
 	Name   string
 	Config map[string]string
 }
+
+// BtConfigSourcer can be implemented by plugins that support sourcing
+// static configuration and be used during "build-time" as variables.
+//
+// StaticConfigSources are meant to be used by the waypoint.hcl template
+// engine and can be used even if the workload doesn't use the Waypoint
+// Entrypoint.
+type BtConfigSourcer interface {
+	BtConfigRead() interface{}
+}
+
+// BtConfigRequest is sent to BtConfigRead for BtConfigSourcer to represent
+// a request for a value from the source. Subsequent calls might returned
+// cached values.
+type BtConfigRequest struct {
+	Name string
+	Config map[string]string
+}

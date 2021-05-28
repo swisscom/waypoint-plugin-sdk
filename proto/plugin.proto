@@ -795,3 +795,27 @@ message ConfigSource {
     }
   }
 }
+
+message StaticConfigSource {
+  message ReadResponse {
+    // values should be exactly equivalent in length to the list of
+    // variable requests given to the Read function.
+    repeated Value values = 1;
+  }
+
+  message Value {
+    // name must match the input name or the entrypoint will ignore it.
+    string name = 1;
+
+    oneof result {
+      // error is an error retrieving this value. Sourcers may also return
+      // an error from the entire Read function. The benefit of granular
+      // errors is that the runtime may be able to fallback to a default.
+      google.rpc.Status error = 2;
+
+      // value must be a string value for the config since we currently
+      // only support environment variables.
+      string value = 3;
+    }
+  }
+}

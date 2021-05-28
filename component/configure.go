@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/waypoint-plugin-sdk/docs"
 )
 
-// Configurable can be optionally implemented by any compontent to
+// Configurable can be optionally implemented by any component to
 // accept user configuration.
 type Configurable interface {
 	// Config should return a pointer to an allocated configuration
